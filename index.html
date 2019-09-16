@@ -1,0 +1,45 @@
+<html>
+<head>Test Static Website
+<script src="jquery.min.js"></script>
+</head>
+
+<script>
+var apiGatewayURL = 'https://meq9zc8b52.execute-api.us-east-1.amazonaws.com/test';
+
+$(document).ready(function(){
+ 
+$('#btnSend').click(function(event) {
+
+	var formData = '{"city_str": "' + $('#city_str').val() + '"}';
+	
+  console.log(formData);
+	debugger;
+    event.preventDefault();
+    $.ajax({
+      url: apiGatewayURL,
+      contentType: 'application/json',
+      type: 'POST',
+      data: formData,
+	  success: function(data) {
+        console.log(data);
+		var txt = 'The weather in ' + $('#city_str').val() + ' is ' + data.temp_int + ' degrees.' ;
+		$('#txtResponse').text(txt);
+      }
+    });
+    return false;
+  });
+
+});
+
+    </script>
+<body>
+<form id="frmMain">
+<p> Too cold for my cat? </p>
+<p> We live in: <input type="text" id="city_str" name="city_str" /> </p>
+<input type="button" id="btnSend" name="btnSend" value="Ask Weather Bot" />
+<p>
+<div id="txtResponse" name="txtResponse" />
+</p>
+</form>
+</body>
+</html>
